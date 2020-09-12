@@ -1,0 +1,12 @@
+hello-world:
+  handler: src/hello/hello.sayHello
+  memorySize: 128
+  events:
+    - http:
+          path: api/hello/{name}
+          method: get
+          cors: true
+          request:
+            parameters:
+              paths:
+                name: true  

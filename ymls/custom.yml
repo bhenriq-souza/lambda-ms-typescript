@@ -1,0 +1,5 @@
+regions:
+  dev: us-east-1
+  hml: us-east-1
+  prd: us-east-1
+  local: us-east-1

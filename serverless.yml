@@ -1,0 +1,39 @@
+
+service:
+  name: lambda-test
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: ${opt:stage, 'local'}
+  region: ${self:custom.regions.${self:provider.stage}}
+  deploymentBucket: lambdas-${self:provider.stage}
+  environment: ${file(ymls/environment.yml)}
+
+custom: ${file(ymls/custom.yml)}
+
+functions: ${file(ymls/functions.yml)}
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-offline
+
+package:
+  exclude:
+    - coverage/**
+    - _warmup/**
+    - test/**
+    - .nyc_output/**
+    - forms/**
+    - .env
+    - .bot-plugin/**
+    - .editorconfig
+    - .gitignore
+    - .eslintignore
+    - .eslintrc.js
+    - package-lock.json
+    - README.md
+    - .vscode/**
+    - .serverless_plugins/**
+    - ymls/**
+    - docs/**
