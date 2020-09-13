@@ -16,7 +16,7 @@
     "suppressImplicitAnyIndexErrors": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "baseUrl": "src",
+    "baseUrl": "./src",
     "paths": {
       "shared": ["shared/*"],
       "hello": ["hello/*"]
