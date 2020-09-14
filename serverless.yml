@@ -7,7 +7,8 @@ provider:
   runtime: nodejs12.x
   stage: ${opt:stage, 'local'}
   region: ${self:custom.regions.${self:provider.stage}}
-  deploymentBucket: lambdas-${self:provider.stage}
+  profile: brunosouza
+  # deploymentBucket: lambdas-${self:provider.stage}
   environment: ${file(ymls/environment.yml)}
 
 custom: ${file(ymls/custom.yml)}
