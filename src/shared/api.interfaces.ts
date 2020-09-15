@@ -1,4 +1,5 @@
-import { APIGatewayEvent, Context, ProxyCallback, ProxyResult } from 'aws-lambda';  // tslint:disable-line no-implicit-dependencies (Using only the type information from the @types package.)
+import { APIGatewayEvent, Context, ProxyCallback, ProxyResult } from 'aws-lambda';
+
 import { ErrorResult } from './errors';
 
 export type ApiCallback = ProxyCallback;

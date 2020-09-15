@@ -1,7 +1,4 @@
-import 'module-alias/register';
-
-import { ApiHandler } from 'shared/api.interfaces';
-
+import { ApiHandler } from '../shared/api.interfaces';
 import { HelloService } from './hello.service';
 import { HelloController } from './hello.controller';
 

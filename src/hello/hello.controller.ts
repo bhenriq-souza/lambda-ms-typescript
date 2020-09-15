@@ -1,8 +1,8 @@
 import { HelloService } from './hello.service';
-import { ApiHandler, ApiEvent, ApiContext, ApiCallback } from 'shared/api.interfaces';
-import { ResponseBuilder } from 'shared/response-builder';
-import { ErrorCode } from 'shared/error-codes';
-import { ErrorResult } from 'shared/errors';
+import { ApiHandler, ApiEvent, ApiContext, ApiCallback } from '../shared/api.interfaces';
+import { ResponseBuilder } from '../shared/response-builder';
+import { ErrorCode } from '../shared/error-codes';
+import { ErrorResult } from '../shared/errors';
 
 export class HelloController {
     public constructor(private readonly _service: HelloService) { }
