@@ -58,6 +58,20 @@ describe('HelloController', () => {
         const response: ApiResponseParsed<HelloMessageResult> = await callSuccess(helloController.sayHello, pathParams);
         expect(response.statusCode).to.equal(HttpStatusCode.Ok);
       });
+
+      it('should return message properties from the service', async () => {
+        when(helloServiceMock.sayHallo(testData.message.name))
+            .thenReturn(Promise.resolve<HelloMessageResult>(testData));
+  
+        const pathParams: PathParameter = {
+          name: testData.message.name
+        };
+  
+        const response: ApiResponseParsed<HelloMessageResult> = await callSuccess(helloController.sayHello, pathParams);
+  
+        expect(response.parsedBody.message.name).to.equal(testData.message.name);
+        expect(response.parsedBody.message.text).to.equal(testData.message.text);
+      });
     });
   });
 });
