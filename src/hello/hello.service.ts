@@ -1,13 +1,22 @@
+import { HelloMessageResult } from './hello.interfaces';
 
 export class HelloService {
     public constructor() { }
 
-    public sayHallo(name: string): Promise<string> {
-        return new Promise((resolve: (message: string) => void, reject: (reson: string) => void): void => {
+    public sayHallo(name: string): Promise<HelloMessageResult> {
+        return new Promise((resolve: (message: HelloMessageResult) => void, reject: (reson: string) => void): void => {
             if (!name) {
                 reject('Name not provided!');
             }
-            resolve(`Say hello to ${name}`);
+
+            const result: HelloMessageResult = {
+                message: {
+                    name,
+                    text: `Say hello to ${name}`,
+                }
+            }
+
+            resolve(result);
         });
     }
 }

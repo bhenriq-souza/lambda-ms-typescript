@@ -3,6 +3,7 @@ import { ApiHandler, ApiEvent, ApiContext, ApiCallback } from '../shared/api.int
 import { ResponseBuilder } from '../shared/response-builder';
 import { ErrorCode } from '../shared/error-codes';
 import { ErrorResult } from '../shared/errors';
+import { HelloMessageResult } from './hello.interfaces';
 
 export class HelloController {
     public constructor(private readonly _service: HelloService) { }
@@ -15,7 +16,7 @@ export class HelloController {
         const name: string = evt.pathParameters && evt.pathParameters.name || '';
 
         this._service.sayHallo(name)
-            .then((msg: string) => ResponseBuilder.ok<string>(msg, cb))
+            .then((msg: HelloMessageResult) => ResponseBuilder.ok<HelloMessageResult>(msg, cb))
             .catch((error: ErrorResult) => ResponseBuilder.internalServerError(error, cb));
     }
 }
