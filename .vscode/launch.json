@@ -14,6 +14,17 @@
           "runtimeArgs": ["run-script", "debug"],
           "port": 9230,
           "timeout": 100000
+        },
+        {
+          "name": "Test",
+          "type": "node",
+          "runtimeVersion": "12.8.1",
+          "request": "launch",
+          "cwd": "${workspaceRoot}",
+          "runtimeExecutable": "npm",
+          "runtimeArgs": ["run-script", "test"],
+          "port": 9230,
+          "timeout": 100000
         }
     ]
   }
