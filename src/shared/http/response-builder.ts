@@ -1,7 +1,8 @@
-import { BadRequestResult, ErrorResult, InternalServerErrorResult } from "./errors";
-import { ApiCallback, ApiResponse, ErrorResponseBody } from "./api.interfaces";
-import { HttpStatusCode } from "./http-status-codes";
-import { ErrorCode } from "./error-codes";
+import { ApiCallback, ApiResponse, ErrorResponseBody } from "../interfaces/api";
+import { HttpStatusCode } from "./status-codes";
+import { BadRequestResult, ErrorResult, InternalServerErrorResult } from "../errors/types";
+import { ErrorCode } from "../errors/codes";
+import { ErrorMessage } from "../errors/messages";
 
 export class ResponseBuilder {
     private static _returnAs<T>(result: T, statusCode: number, callback: ApiCallback): void {
@@ -30,7 +31,7 @@ export class ResponseBuilder {
     }
 
     public static internalServerError(error: Error, callback: ApiCallback): void {
-        const errorResult: InternalServerErrorResult = new InternalServerErrorResult(ErrorCode.GeneralError, 'Sorry...');
+        const errorResult: InternalServerErrorResult = new InternalServerErrorResult(ErrorCode.GeneralError, ErrorMessage[ErrorCode.GeneralError]);
         ResponseBuilder._returnAs<InternalServerErrorResult>(errorResult, HttpStatusCode.InternalServerError, callback);
     }
 }

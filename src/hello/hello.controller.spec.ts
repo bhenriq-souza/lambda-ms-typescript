@@ -2,14 +2,18 @@ import { Chance } from 'chance';
 import { expect } from 'chai';
 import { instance, mock, reset, when } from 'ts-mockito';
 
-import { HttpStatusCode } from '../shared/http-status-codes';
+import { HttpStatusCode } from '../shared/http/status-codes';
+
+import { ErrorCode } from '../shared/errors/codes';
+import { ErrorMessage } from '../shared/errors/messages';
+import { BadRequestResult } from '../shared/errors/types';
 
 import { HelloService } from './hello.service';
 import { HelloTestData, HelloMessage, HelloMessageResult } from './hello.interfaces';
 import { HelloController } from './hello.controller';
 
-import { PathParameter, ApiResponseParsed } from '../../test/test.interfaces';
-import { callSuccess } from '../../test';
+import { PathParameter, ApiResponseParsed, ApiErrorResponseParsed } from '../../test/test.interfaces';
+import { callSuccess, callFailure } from '../../test';
 
 const chance: Chance.Chance = new Chance();
 
@@ -71,6 +75,26 @@ describe('HelloController', () => {
   
         expect(response.parsedBody.message.name).to.equal(testData.message.name);
         expect(response.parsedBody.message.text).to.equal(testData.message.text);
+      });
+    });
+
+    describe('failure', () => {
+      it('should return Bad Request when missing path parameter', async () => {
+        
+        const errorResult: BadRequestResult = new BadRequestResult(testData.error.code, testData.error.description);
+
+        when(helloServiceMock.sayHallo(testData.message.name))
+          .thenReturn(Promise.reject(errorResult));
+        
+        const pathParams: PathParameter = {
+          name: '',
+        };
+
+        const response: ApiErrorResponseParsed = await callFailure(helloController.sayHello, pathParams);
+
+        expect(response.statusCode).to.equal(HttpStatusCode.BadRequest);
+        expect(response.parsedBody.error.code).to.equal(ErrorCode.MissingName);
+        expect(response.parsedBody.error.description).to.equal(ErrorMessage[ErrorCode.MissingName]);
       });
     });
   });

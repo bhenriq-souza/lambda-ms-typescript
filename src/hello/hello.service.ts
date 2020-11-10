@@ -1,23 +1,17 @@
 import { HelloMessageResult } from './hello.interfaces';
-import { BadRequestResult } from '../shared/errors';
-import { ErrorCode } from '../shared/error-codes';
+import { BadRequestResult } from '../shared/errors/types';
 
 export class HelloService {
     public constructor() { }
 
     public sayHallo(name: string): Promise<HelloMessageResult> {
-        return new Promise((resolve: (message: HelloMessageResult) => void, reject: (reson: BadRequestResult) => void): void => {
-            if (!name) {
-                reject(new BadRequestResult(ErrorCode.MissingName, 'Name not provided!'));
-            }
-
+        return new Promise((resolve: (message: HelloMessageResult) => void, reject: (reson: BadRequestResult) => void): void => {           
             const result: HelloMessageResult = {
                 message: {
                     name,
                     text: `Say hello to ${name}`,
                 }
             }
-
             resolve(result);
         });
     }

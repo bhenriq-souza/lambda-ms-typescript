@@ -2,6 +2,5 @@
 
 export const ErrorCode = {
   GeneralError: 'GENERAL_ERROR',
-  InvalidName: 'INVALID_NAME',
   MissingName: 'MISSING_NAME'
 };

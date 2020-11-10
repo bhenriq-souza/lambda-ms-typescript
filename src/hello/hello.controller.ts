@@ -1,8 +1,9 @@
 import { HelloService } from './hello.service';
-import { ApiHandler, ApiEvent, ApiContext, ApiCallback } from '../shared/api.interfaces';
-import { ResponseBuilder } from '../shared/response-builder';
-import { ErrorCode } from '../shared/error-codes';
-import { ErrorResult } from '../shared/errors';
+import { ApiHandler, ApiEvent, ApiContext, ApiCallback } from '../shared/interfaces/api';
+import { ResponseBuilder } from '../shared/http/response-builder';
+import { ErrorCode } from '../shared/errors/codes';
+import { ErrorMessage } from '../shared/errors/messages';
+import { ErrorResult } from '../shared/errors/types';
 import { HelloMessageResult } from './hello.interfaces';
 
 export class HelloController {
@@ -10,7 +11,7 @@ export class HelloController {
 
     public sayHello: ApiHandler = (evt: ApiEvent, ctx: ApiContext, cb: ApiCallback): void => {
         if (!evt.pathParameters || !evt.pathParameters.name) {
-            return ResponseBuilder.badRequest(ErrorCode.MissingName, 'Name is required', cb);
+            return ResponseBuilder.badRequest(ErrorCode.MissingName, ErrorMessage[ErrorCode.MissingName], cb);
         }
 
         const name: string = evt.pathParameters && evt.pathParameters.name || '';

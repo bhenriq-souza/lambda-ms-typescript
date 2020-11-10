@@ -1,5 +1,5 @@
 
-import { ApiContext, ApiEvent, ApiHandler, ApiResponse, ErrorResponseBody } from '../src/shared/api.interfaces';
+import { ApiContext, ApiEvent, ApiHandler, ApiResponse, ErrorResponseBody } from '../src/shared/interfaces/api';
 import { ApiErrorResponseParsed, ApiResponseParsed, PathParameter } from './test.interfaces';
 
 type SuccessCaller = <T> (handler: ApiHandler, pathParameters?: PathParameter) => Promise<ApiResponseParsed<T>>;

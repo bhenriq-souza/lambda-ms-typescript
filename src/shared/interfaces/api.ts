@@ -1,6 +1,6 @@
 import { APIGatewayEvent, Context, ProxyCallback, ProxyResult } from 'aws-lambda';
 
-import { ErrorResult } from './errors';
+import { ErrorResult } from '../errors/types';
 
 export type ApiCallback = ProxyCallback;
 export type ApiContext = Context;
