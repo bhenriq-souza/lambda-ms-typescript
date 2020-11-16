@@ -6,10 +6,9 @@
     "test/**/*",
     "**/*.d.ts",
     "**/*.spec.ts",
-    "**/*.interfaces.ts",
-    "src/cities/cities.ts",
-    "src/health/health.ts",
-    "src/swagger/swagger.ts"
+    "**/**/*.interfaces.ts",
+    "src/hello/hello.ts",
+    "src/shared/*"
   ],
   "extension": [
     ".ts"
