@@ -1,19 +1,19 @@
-import { default as LogLevels } from './levels';
+import { logLevels } from './levels';
 
-export default class {
+// tslint:disable: no-console
+// tslint:disable-next-line: no-default-export
+export class Logger {
 
   public constructor(private readonly _target: string) { }
 
-  public info(time: string, message: string, data: any = {}) {
-    console.info(this.buildLogMsg(LogLevels.INFO, time, message, data));
+  public error = (time: string, message: string): void => {
+    console.error(this.buildLogMsg(logLevels.ERROR, time, message));
   }
 
-  public error(time: string, message: string, data: any = {}) {
-    console.error(this.buildLogMsg(LogLevels.ERROR, time, message, data));
+  public info = (time: string, message: string): void => {
+    console.info(this.buildLogMsg(logLevels.INFO, time, message));
   }
 
-  private buildLogMsg(level: string, time: string, message: string, data: any = {}): string {
-    return `${time} - ${level}: ${message} - ${this._target}`
-      + `${Object.entries(data).length > 0 ? ` - ${JSON.stringify(data)}` : '' }`;
-  }
+  private readonly buildLogMsg = (level: string, time: string, message: string): string => `${time} - ${level}: ${message} - ${this._target}`;
+
 }

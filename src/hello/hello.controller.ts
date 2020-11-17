@@ -1,8 +1,10 @@
-import { ApiHandler, ApiEvent, ApiContext, ApiCallback } from '../shared/interfaces/api';
-import { ResponseBuilder } from '../shared/http/response-builder';
+import { ApiCallback, ApiContext, ApiEvent, ApiHandler  } from '../shared/interfaces/api';
+
 import { ErrorCode } from '../shared/errors/codes';
 import { ErrorMessage } from '../shared/errors/messages';
 import { ErrorResult } from '../shared/errors/types';
+import { ResponseBuilder } from '../shared/http/response-builder';
+
 import { CustomLogger } from '../utils/logger';
 
 import { HelloMessageResult } from './hello.interfaces';
@@ -12,10 +14,10 @@ export class HelloController {
     public constructor(private readonly _service: HelloService) { }
 
     public sayHello: ApiHandler = (evt: ApiEvent, ctx: ApiContext, cb: ApiCallback): void => {
-        
-        const logger = new CustomLogger(evt.path);
+
+        const logger: CustomLogger = new CustomLogger(evt.path, (new Date()).toISOString());
         logger.requestReceived(evt);
-        
+
         if (!evt.pathParameters || !evt.pathParameters.name) {
             return ResponseBuilder.badRequest(ErrorCode.MissingName, ErrorMessage[ErrorCode.MissingName], cb);
         }

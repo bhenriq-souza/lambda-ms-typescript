@@ -1,3 +1,4 @@
+// tslint:disable-next-line: no-implicit-dependencies
 import { APIGatewayEvent, Context, ProxyCallback, ProxyResult } from 'aws-lambda';
 
 import { ErrorResult } from '../errors/types';

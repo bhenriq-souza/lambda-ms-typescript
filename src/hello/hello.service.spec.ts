@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import { Chance } from 'chance';
 
-import { HelloService } from './hello.service';
 import { HelloMessage, HelloMessageResult } from './hello.interfaces';
+import { HelloService } from './hello.service';
 
 const chance: Chance.Chance = new Chance();
 
@@ -14,8 +14,8 @@ describe('HelloService', () => {
 
     service = new HelloService();
 
-    const nameMock = chance.name();
-    const txtMock = `Say hello to ${nameMock}`;
+    const nameMock: string = chance.name();
+    const txtMock: string = `Say hello to ${nameMock}`;
 
     hello = {
       name: nameMock,

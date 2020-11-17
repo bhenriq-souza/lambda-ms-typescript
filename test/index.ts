@@ -5,8 +5,8 @@ import { ApiErrorResponseParsed, ApiResponseParsed, PathParameter } from './test
 type SuccessCaller = <T> (handler: ApiHandler, pathParameters?: PathParameter) => Promise<ApiResponseParsed<T>>;
 type FailureCaller = <T> (handler: ApiHandler, pathParameters?: PathParameter) => Promise<ApiErrorResponseParsed>;
 
-export const callSuccess: SuccessCaller = <T> (handler: ApiHandler, pathParameters?: PathParameter): Promise<ApiResponseParsed<T>> => {
-  return new Promise((resolve, reject) => {
+export const callSuccess: SuccessCaller = <T>(handler: ApiHandler, pathParameters?: PathParameter): Promise<ApiResponseParsed<T>> => new Promise(
+  (resolve: (parsedResult: ApiResponseParsed<T>) => void, reject: (message: string) => void): void => {
     const evt: ApiEvent = <ApiEvent> {};
 
     if (pathParameters) {
@@ -23,11 +23,10 @@ export const callSuccess: SuccessCaller = <T> (handler: ApiHandler, pathParamete
       parsedResult.parsedBody = JSON.parse(result.body) as T;
       resolve(parsedResult);
     });
-  });
-};
+});
 
-export const callFailure: FailureCaller = <T> (handler: ApiHandler, pathParameters?: PathParameter): Promise<ApiErrorResponseParsed> => {
-  return new Promise((resolve, reject) => {
+export const callFailure: FailureCaller = (handler: ApiHandler, pathParameters?: PathParameter): Promise<ApiErrorResponseParsed> => new Promise(
+  (resolve: (parsedResult: ApiErrorResponseParsed) => void, reject: (message: string) => void): void => {
     const evt: ApiEvent = <ApiEvent> {};
 
     if (pathParameters) {
@@ -44,5 +43,4 @@ export const callFailure: FailureCaller = <T> (handler: ApiHandler, pathParamete
       parsedResult.parsedBody = JSON.parse(result.body) as ErrorResponseBody;
       resolve(parsedResult);
     });
-  });
-};
+});

@@ -1,18 +1,18 @@
 import { HelloMessageResult } from './hello.interfaces';
-import { BadRequestResult } from '../shared/errors/types';
 
 export class HelloService {
-    public constructor() { }
 
+    // tslint:disable-next-line: prefer-function-over-method
     public sayHallo(name: string): Promise<HelloMessageResult> {
-        return new Promise((resolve: (message: HelloMessageResult) => void, reject: (reson: BadRequestResult) => void): void => {           
-            const result: HelloMessageResult = {
-                message: {
-                    name,
-                    text: `Say hello to ${name}`,
-                }
-            }
-            resolve(result);
+        return new Promise(
+            (resolve: (message: HelloMessageResult) => void): void => {
+                const result: HelloMessageResult = {
+                    message: {
+                        name,
+                        text: `Say hello to ${name}`,
+                    }
+                };
+                resolve(result);
         });
     }
 }

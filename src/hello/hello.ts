@@ -1,9 +1,11 @@
 import { ApiHandler } from '../shared/interfaces/api';
-import { HelloService } from './hello.service';
+
 import { HelloController } from './hello.controller';
+import { HelloService } from './hello.service';
 
 const service: HelloService = new HelloService();
+
 const controller: HelloController = new HelloController(service);
 
-// functions
+// Functions
 export const sayHello: ApiHandler = controller.sayHello;
