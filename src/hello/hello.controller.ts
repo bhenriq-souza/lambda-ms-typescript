@@ -15,7 +15,7 @@ export class HelloController {
 
     public sayHello: ApiHandler = (evt: ApiEvent, ctx: ApiContext, cb: ApiCallback): void => {
 
-        const logger: CustomLogger = new CustomLogger(evt.path, (new Date()).toISOString());
+        const logger: CustomLogger = new CustomLogger(evt.path);
         logger.requestReceived(evt);
 
         if (!evt.pathParameters || !evt.pathParameters.name) {

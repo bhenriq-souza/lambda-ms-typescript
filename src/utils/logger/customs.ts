@@ -1,4 +1,12 @@
+import { InfoCode } from '../../shared/info/codes';
+import { InfoMessageReplacers } from '../../shared/info/message.replacers';
+import { InfoMessage } from '../../shared/info/messages';
+
+import { ErrorCode } from '../../shared/errors/codes';
+import { ErrorMessageReplacers } from '../../shared/errors/message.replacers';
+import { ErrorMessage } from '../../shared/errors/messages';
 import { ErrorResult } from '../../shared/errors/types';
+
 import { ApiEvent } from '../../shared/interfaces/api';
 
 import { Logger } from './';
@@ -8,33 +16,33 @@ import { Logger } from './';
 export default class {
   private readonly _logger: Logger;
 
-  public constructor(
-    target: string,
-    private _initTime: string
-  ) {
+  public constructor(target: string) {
     this._logger = new Logger(target);
-    this._initTime = '';
   }
 
   public requestFailureEnd(error: ErrorResult): void {
-    const msg: string = `Request finalized with error ${error.code} - ${error.description}`;
+    const msg: string = ErrorMessage[ErrorCode.RequestFailed]
+                          .replace(ErrorMessageReplacers.HttpErrorCode, error.code)
+                          .replace(ErrorMessageReplacers.ErrorDescription, error.description);
 
-    this._logger.error((new Date()).toISOString(), msg);
+    this._logger.error(this._logger.timerEnd(), msg);
   }
 
   public requestReceived(evt: ApiEvent): void {
-    this._initTime = (new Date()).toISOString();
-    const msg: string = `${evt.httpMethod} request received`;
+    const start: string = this._logger.timerStart();
+    const msg: string = InfoMessage[InfoCode.RequestReceived]
+                          .replace(InfoMessageReplacers.HttpMethod, evt.httpMethod);
 
-    this._logger.info(this._initTime, msg);
+    this._logger.info(start, msg);
   }
 
   public requestSuccessEnd(evt: ApiEvent): void {
-    const init: number = new Date(this._initTime).getTime();
-    const now: Date = new Date();
-    const runTime: number = now.getTime() - init;
-    const msg: string = `${evt.httpMethod} request finalized with success in ${runTime}ms`;
+    const end: string = this._logger.timerEnd();
+    const runTime: number = this._logger.timerDiff();
+    const msg: string = InfoMessage[InfoCode.RequestSuccess]
+                          .replace(InfoMessageReplacers.HttpMethod, evt.httpMethod)
+                          .replace(InfoMessageReplacers.RequestTime, runTime.toString());
 
-    this._logger.info(now.toISOString(), msg);
+    this._logger.info(end, msg);
   }
 }

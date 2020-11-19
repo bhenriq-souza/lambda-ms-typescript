@@ -1,5 +1,4 @@
 import { HelloMessageResult } from './hello.interfaces';
-
 export class HelloService {
 
     // tslint:disable-next-line: prefer-function-over-method

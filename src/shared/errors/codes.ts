@@ -2,4 +2,5 @@
 export const ErrorCode = {
   GeneralError: 'GENERAL_ERROR',
   MissingName: 'MISSING_NAME',
+  RequestFailed: 'REQUEST_FAILED',
 };
