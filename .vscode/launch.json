@@ -7,13 +7,14 @@
         {
           "name": "Debug",
           "type": "node",
-          "runtimeVersion": "12.8.1",
+          "runtimeVersion": "14.17.5",
           "request": "launch",
           "cwd": "${workspaceRoot}",
           "runtimeExecutable": "npm",
           "runtimeArgs": ["run-script", "debug"],
           "port": 9230,
-          "timeout": 100000
+          "timeout": 100000,
+          "console": "integratedTerminal"
         },
         {
           "name": "Test",

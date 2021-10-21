@@ -14,7 +14,7 @@
       "no-inferrable-types": false,
       "no-object-literal-type-assertion": false,
       "no-parameter-properties": false,
-      "no-unnecessary-class": ["allow-static-only"],
+      "no-unnecessary-class": false,
       "no-use-before-declare": false,
       "no-void-expression": false,
       "only-arrow-functions": false,
