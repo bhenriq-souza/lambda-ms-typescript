@@ -1,14 +1,13 @@
 
 service:
-  name: lambda-test
+  name: lambda-ms-typescript
 
 provider:
   name: aws
-  runtime: nodejs12.x
+  runtime: nodejs14.x
   stage: ${opt:stage, 'local'}
   region: ${self:custom.regions.${self:provider.stage}}
   profile: brunosouza
-  # deploymentBucket: lambdas-${self:provider.stage}
   environment: ${file(ymls/environment.yml)}
 
 custom: ${file(ymls/custom.yml)}

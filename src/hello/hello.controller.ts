@@ -1,21 +1,37 @@
+import { ApiCallback, ApiContext, ApiEvent, ApiHandler  } from '../shared/interfaces/api';
+
+import { ErrorCode } from '../shared/errors/codes';
+import { ErrorMessage } from '../shared/errors/messages';
+import { ErrorResult } from '../shared/errors/types';
+import { ResponseBuilder } from '../shared/http/response-builder';
+
+import { CustomLogger } from '../utils/logger';
+
+import { HelloMessageResult } from './hello.interfaces';
 import { HelloService } from './hello.service';
-import { ApiHandler, ApiEvent, ApiContext, ApiCallback } from '../shared/api.interfaces';
-import { ResponseBuilder } from '../shared/response-builder';
-import { ErrorCode } from '../shared/error-codes';
-import { ErrorResult } from '../shared/errors';
 
 export class HelloController {
     public constructor(private readonly _service: HelloService) { }
 
     public sayHello: ApiHandler = (evt: ApiEvent, ctx: ApiContext, cb: ApiCallback): void => {
+
+        const logger: CustomLogger = new CustomLogger(evt.path, (new Date()).toISOString());
+        logger.requestReceived(evt);
+
         if (!evt.pathParameters || !evt.pathParameters.name) {
-            return ResponseBuilder.badRequest(ErrorCode.MissingName, 'Name is required', cb);
+            return ResponseBuilder.badRequest(ErrorCode.MissingName, ErrorMessage[ErrorCode.MissingName], cb);
         }
 
         const name: string = evt.pathParameters && evt.pathParameters.name || '';
 
         this._service.sayHallo(name)
-            .then((msg: string) => ResponseBuilder.ok<string>(msg, cb))
-            .catch((error: ErrorResult) => ResponseBuilder.internalServerError(error, cb));
+            .then((msg: HelloMessageResult) => {
+                logger.requestSuccessEnd(evt);
+                ResponseBuilder.ok<HelloMessageResult>(msg, cb);
+            })
+            .catch((error: ErrorResult) => {
+                logger.requestFailureEnd(error);
+                ResponseBuilder.internalServerError(error, cb);
+            });
     }
 }
